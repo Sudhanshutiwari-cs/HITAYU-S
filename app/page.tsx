@@ -632,16 +632,15 @@ export default function HitayuSurgicalClinic() {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">A Look Inside Hitayu Surgical Clinic</h2>
           </div>
 
-          {/* Mobile: simple 2-col grid */}
+          {/* Mobile: strict 2×2 grid — 4 images only, 5th hidden */}
           <div className="grid grid-cols-2 gap-3 sm:hidden">
             {[
               { src: "https://res.cloudinary.com/df01whs60/image/upload/v1782922276/76ba585c-8475-4638-b24c-fac8d7219dc6.png", alt: "Hitayu Surgical Clinic" },
               { src: "https://res.cloudinary.com/df01whs60/image/upload/v1782922182/a9aa3d65-b66a-48d2-8451-34a9b7f4bbb7.png", alt: "Hitayu Surgical Clinic" },
               { src: "https://res.cloudinary.com/df01whs60/image/upload/v1782922389/44efdec6-2e26-4698-b56e-05646c6b02d8.png", alt: "Hitayu Surgical Clinic" },
               { src: "https://res.cloudinary.com/df01whs60/image/upload/v1782922326/081e1dcd-306d-4131-8c52-3ae392e876bc.png", alt: "Hitayu Surgical Clinic" },
-              { src: "https://res.cloudinary.com/df01whs60/image/upload/v1782922458/dc4cc3b7-faf0-4a8f-8192-b2924024da02.png", alt: "Hitayu Surgical Clinic" },
             ].map((img, i) => (
-              <div key={i} className={`relative overflow-hidden rounded-xl bg-gray-100 group h-40 ${i === 1 ? 'col-span-2' : ''}`}>
+              <div key={i} className="relative overflow-hidden rounded-xl bg-gray-100 group h-44">
                 <img src={img.src} alt={img.alt} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
               </div>
             ))}
