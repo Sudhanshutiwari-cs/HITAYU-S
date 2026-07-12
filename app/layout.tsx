@@ -75,6 +75,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  verification: {
+    google: 'Z4MOcJ-gQcuXI_7lEATuXr6Z6wLfd5AMMtETxfbXeKY',
+  },
   icons: {
     icon: [
       {
@@ -166,6 +169,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+
       </head>
       <body className="font-sans antialiased">
         {children}

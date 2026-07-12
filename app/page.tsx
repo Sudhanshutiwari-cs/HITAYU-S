@@ -65,8 +65,11 @@ function AppointmentForm() {
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
+    email: '',
+    address: '',
     condition: '',
     preferredDate: '',
+    preferredTime: '',
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -92,7 +95,7 @@ function AppointmentForm() {
         setStatus('error');
       } else {
         setStatus('success');
-        setFormData({ fullName: '', phone: '', condition: '', preferredDate: '', message: '' });
+        setFormData({ fullName: '', phone: '', email: '', address: '', condition: '', preferredDate: '', preferredTime: '', message: '' });
       }
     } catch {
       setErrorMessage('Network error. Please check your connection and try again.');
@@ -156,7 +159,21 @@ function AppointmentForm() {
             <input
               type="email"
               name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Enter your email address"
+              className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#9BD22A] focus:border-transparent text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Residential Address</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Street, Area, City"
               className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#9BD22A] focus:border-transparent text-sm"
             />
           </div>
@@ -187,15 +204,36 @@ function AppointmentForm() {
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Date</label>
-            <input
-              type="date"
-              name="preferredDate"
-              value={formData.preferredDate}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent text-gray-500 text-sm"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Date</label>
+              <input
+                type="date"
+                name="preferredDate"
+                value={formData.preferredDate}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent text-gray-500 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Time</label>
+              <select
+                name="preferredTime"
+                value={formData.preferredTime}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent text-gray-500 bg-white text-sm"
+              >
+                <option value="">Select time slot</option>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="02:00 PM">02:00 PM</option>
+                <option value="03:00 PM">03:00 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+                <option value="05:00 PM">05:00 PM</option>
+              </select>
+            </div>
           </div>
 
           <div>
@@ -520,6 +558,98 @@ export default function HitayuSurgicalClinic() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sushrut Section */}
+      <section className="bg-white py-12 sm:py-16 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Section Label */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 bg-[#9BD22A]/10 text-[#2B7ABB] px-4 py-1.5 rounded-full border border-[#9BD22A]/20 self-start">
+              <div className="w-2 h-2 bg-[#9BD22A] rounded-full flex-shrink-0"></div>
+              <span className="text-xs sm:text-sm font-semibold tracking-wider">OUR INSPIRATION</span>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+
+            {/* Left — Image + Quote card */}
+            <div className="flex flex-col gap-5">
+              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#e6f0fa] to-[#f0f9e1] border border-[#9BD22A]/20 flex items-center justify-center min-h-[220px] sm:min-h-[280px]">
+                <div className="absolute inset-0 flex items-center justify-center opacity-5">
+                  <Scissors size={260} className="text-[#2B7ABB]" />
+                </div>
+                <div className="relative z-10 flex flex-col items-center justify-center p-8 sm:p-10 text-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-[#2B7ABB] to-[#1e5a8a] flex items-center justify-center mb-5 shadow-lg shadow-[#2B7ABB]/30 flex-shrink-0">
+                    <Stethoscope size={36} className="text-white" />
+                  </div>
+                  <div className="text-[#2B7ABB] font-bold text-2xl sm:text-3xl tracking-wide mb-1">Sushruta</div>
+                  <div className="text-gray-500 text-sm font-medium">c. 600 BCE — Ancient India</div>
+                </div>
+              </div>
+
+              {/* Quote card */}
+              <div className="bg-gradient-to-br from-[#2B7ABB] to-[#1e5a8a] rounded-2xl p-5 sm:p-6 text-white relative overflow-hidden">
+                <Quote size={32} className="absolute top-4 right-4 text-white/20" />
+                <p className="text-sm sm:text-base leading-relaxed italic text-white/90 relative z-10">
+                  &quot;A physician who fails to enter the body of a patient with the lamp of knowledge and understanding can never treat diseases.&quot;
+                </p>
+                <div className="mt-3 text-white/60 text-xs font-medium">— Sushruta Samhita</div>
+              </div>
+            </div>
+
+            {/* Right — Content */}
+            <div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-5 leading-tight text-balance">
+                The Father of{' '}
+                <span className="relative inline-block">
+                  <span className="text-[#9BD22A]">Surgery</span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#9BD22A] rounded-full"></span>
+                </span>
+              </h2>
+
+              <p className="text-gray-600 text-base sm:text-lg mb-5 leading-relaxed">
+                Sushruta was an ancient Indian physician and surgeon who lived around 600 BCE. His monumental work, the <span className="font-semibold text-gray-800">Sushruta Samhita</span>, is one of the foundational texts of Ayurvedic medicine and surgery, documenting over 300 surgical procedures and 120 surgical instruments — centuries before modern medicine.
+              </p>
+
+              <p className="text-gray-600 text-sm sm:text-base mb-7 sm:mb-8 leading-relaxed">
+                Widely regarded as the world&apos;s first plastic and reconstructive surgeon, Sushruta pioneered techniques for rhinoplasty, cataract surgery and complex wound management. His emphasis on precise dissection, surgical hygiene and post-operative care laid the philosophical foundation that continues to guide ethical, skilled surgical practice today.
+              </p>
+
+              {/* Contribution pillars */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  { icon: Scissors, color: '#2B7ABB', bg: 'bg-[#e6f0fa]', label: '300+ Surgical Procedures', sub: 'Documented in Sushruta Samhita' },
+                  { icon: Brain, color: '#9BD22A', bg: 'bg-[#f0f9e1]', label: 'Pioneer of Rhinoplasty', sub: 'World\'s first reconstructive surgery' },
+                  { icon: Leaf, color: '#9BD22A', bg: 'bg-[#f0f9e1]', label: 'Ayurvedic Integration', sub: 'Holistic healing merged with surgery' },
+                  { icon: Shield, color: '#2B7ABB', bg: 'bg-[#e6f0fa]', label: '120 Surgical Instruments', sub: 'Classified with remarkable precision' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3 bg-gray-50 border border-gray-100 rounded-2xl p-4 hover:shadow-sm hover:border-[#9BD22A]/30 transition">
+                    <div className={`w-10 h-10 ${item.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                      <item.icon size={18} style={{ color: item.color }} />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 text-sm">{item.label}</div>
+                      <div className="text-gray-500 text-xs mt-0.5">{item.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Link to philosophy */}
+              <div className="mt-7 sm:mt-8 flex items-center gap-3 bg-[#f0f9e1] border border-[#9BD22A]/20 rounded-2xl p-4 sm:p-5">
+                <div className="w-10 h-10 bg-[#9BD22A] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Heart size={18} className="text-white" />
+                </div>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  At <span className="font-semibold text-gray-900">Hitayu Surgical Clinic</span>, we carry forward this timeless legacy — uniting ancient wisdom with modern precision to heal every patient with compassion and expertise.
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -893,6 +1023,38 @@ export default function HitayuSurgicalClinic() {
               <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Additional Services</h3>
               <ul className="space-y-2">
                 {['Migraine Treatment', 'Wound Management'].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
+                    <CheckCircle className="text-[#2B7ABB] flex-shrink-0 mt-0.5" size={14} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Card 7: Systemic Illness */}
+            <div className="bg-gradient-to-br from-[#e6f0fa] to-white rounded-2xl p-5 sm:p-6 border border-[#2B7ABB]/20 hover:shadow-lg hover:border-[#2B7ABB]/50 transition group">
+              <div className="w-12 sm:w-14 h-12 sm:h-14 bg-[#2B7ABB] rounded-2xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform">
+                <Pill className="text-white" size={24} />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Systemic Illness</h3>
+              <ul className="space-y-2">
+                {['Hypertension', 'Thyroid Disorders', 'Diabetes'].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
+                    <CheckCircle className="text-[#9BD22A] flex-shrink-0 mt-0.5" size={14} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Card 8: Sexual Wellness */}
+            <div className="bg-gradient-to-br from-[#f0f9e1] to-white rounded-2xl p-5 sm:p-6 border border-[#9BD22A]/20 hover:shadow-lg hover:border-[#9BD22A]/50 transition group">
+              <div className="w-12 sm:w-14 h-12 sm:h-14 bg-[#9BD22A] rounded-2xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform">
+                <Heart className="text-gray-900" size={24} />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Sexual Wellness</h3>
+              <ul className="space-y-2">
+                {['Confidential Consultations', 'Personalised Treatment Plans', 'Holistic Wellness Support'].map((item) => (
                   <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                     <CheckCircle className="text-[#2B7ABB] flex-shrink-0 mt-0.5" size={14} />
                     <span>{item}</span>
@@ -1642,7 +1804,13 @@ export default function HitayuSurgicalClinic() {
         <div className="border-t border-slate-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-3 text-center md:text-left">
             <p className="text-slate-500 text-xs sm:text-sm">© 2026 Hitayu Surgical Clinic. All rights reserved.</p>
-            <p className="text-[#9BD22A] text-xs sm:text-sm font-medium">Piles Doctor Najafgarh | Fissure Treatment Najafgarh | Fistula Specialist Delhi</p>
+            <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-4 gap-y-1">
+              <p className="text-[#9BD22A] text-xs sm:text-sm font-medium">Piles Doctor Najafgarh | Fissure Treatment Najafgarh | Fistula Specialist Delhi</p>
+              <div className="flex items-center gap-4">
+                <a href="/privacy-policy" className="text-slate-500 text-xs hover:text-[#9BD22A] transition">Privacy Policy</a>
+                <a href="/terms-and-conditions" className="text-slate-500 text-xs hover:text-[#9BD22A] transition">Terms &amp; Conditions</a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
