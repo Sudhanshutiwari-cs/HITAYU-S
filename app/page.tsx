@@ -1766,7 +1766,13 @@ export default function HitayuSurgicalClinic() {
         <div className="border-t border-slate-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-3 text-center md:text-left">
             <p className="text-slate-500 text-xs sm:text-sm">© 2026 Hitayu Surgical Clinic. All rights reserved.</p>
-            <p className="text-[#9BD22A] text-xs sm:text-sm font-medium">Piles Doctor Najafgarh | Fissure Treatment Najafgarh | Fistula Specialist Delhi</p>
+            <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-4 gap-y-1">
+              <p className="text-[#9BD22A] text-xs sm:text-sm font-medium">Piles Doctor Najafgarh | Fissure Treatment Najafgarh | Fistula Specialist Delhi</p>
+              <div className="flex items-center gap-4">
+                <a href="/privacy-policy" className="text-slate-500 text-xs hover:text-[#9BD22A] transition">Privacy Policy</a>
+                <a href="/terms-and-conditions" className="text-slate-500 text-xs hover:text-[#9BD22A] transition">Terms &amp; Conditions</a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
