@@ -58,30 +58,35 @@ function AppointmentDetailModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full sm:max-w-2xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
+        {/* Drag handle (mobile only) */}
+        <div className="flex justify-center pt-3 pb-1 sm:hidden">
+          <div className="w-10 h-1 bg-gray-200 rounded-full" />
+        </div>
+
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#e6f0fa] rounded-xl flex items-center justify-center">
-              <User size={18} className="text-[#2B7ABB]" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#e6f0fa] rounded-xl flex items-center justify-center flex-shrink-0">
+              <User size={16} className="text-[#2B7ABB]" />
             </div>
             <div>
-              <h2 className="font-bold text-gray-900 text-lg leading-tight">{appt.full_name}</h2>
+              <h2 className="font-bold text-gray-900 text-base sm:text-lg leading-tight">{appt.full_name}</h2>
               <p className="text-gray-400 text-xs">#{appt.id.slice(0, 8).toUpperCase()}</p>
             </div>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition" aria-label="Close">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition flex-shrink-0" aria-label="Close">
             <X size={16} className="text-gray-600" />
           </button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-5 sm:space-y-6">
           {/* Patient Info Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               { icon: Phone,       label: 'Mobile',   value: appt.phone },
               { icon: Mail,        label: 'Email',    value: appt.email ?? '—' },
@@ -90,7 +95,7 @@ function AppointmentDetailModal({
               { icon: Calendar,    label: 'Date',     value: new Date(appt.preferred_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) },
               { icon: Clock,       label: 'Time',     value: appt.preferred_time ?? '—' },
             ].map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-start gap-3 bg-gray-50 rounded-2xl p-3.5">
+              <div key={label} className="flex items-start gap-3 bg-gray-50 rounded-2xl p-3 sm:p-3.5">
                 <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                   <Icon size={14} className="text-[#2B7ABB]" />
                 </div>
@@ -104,7 +109,7 @@ function AppointmentDetailModal({
 
           {/* Message */}
           {appt.message && (
-            <div className="bg-gray-50 rounded-2xl p-4">
+            <div className="bg-gray-50 rounded-2xl p-3 sm:p-4">
               <p className="text-gray-400 text-xs mb-1.5 flex items-center gap-1.5"><MessageSquare size={12} /> Message</p>
               <p className="text-gray-700 text-sm leading-relaxed">{appt.message}</p>
             </div>
@@ -123,7 +128,7 @@ function AppointmentDetailModal({
                     <button
                       key={s}
                       onClick={() => setStatus(s)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold border transition ${
                         status === s
                           ? `${cfg.bg} ${cfg.text} ${cfg.border} ring-2 ring-offset-1 ring-current`
                           : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
@@ -148,17 +153,17 @@ function AppointmentDetailModal({
               />
             </div>
 
-            <div className="flex gap-3 pt-1">
+            <div className="flex gap-3 pt-1 pb-2 sm:pb-0">
               <button
                 onClick={onClose}
-                className="flex-1 py-2.5 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:bg-gray-50 transition"
+                className="flex-1 py-3 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:bg-gray-50 transition"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex-1 py-2.5 rounded-full bg-[#2B7ABB] text-white text-sm font-bold hover:bg-[#1e5a8a] transition shadow-lg shadow-[#2B7ABB]/25 disabled:opacity-60"
+                className="flex-1 py-3 rounded-full bg-[#2B7ABB] text-white text-sm font-bold hover:bg-[#1e5a8a] transition shadow-lg shadow-[#2B7ABB]/25 disabled:opacity-60"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>
@@ -232,9 +237,9 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-50 font-sans">
       {/* Top Nav */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#2B7ABB] rounded-xl flex items-center justify-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 bg-[#2B7ABB] rounded-xl flex items-center justify-center flex-shrink-0">
               <Stethoscope size={16} className="text-white" />
             </div>
             <div className="leading-tight">
@@ -262,44 +267,44 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6">
 
         {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
           {[
             { label: 'Total',     value: counts.total,     bg: 'bg-[#e6f0fa]', text: 'text-[#2B7ABB]',  dot: 'bg-[#2B7ABB]'  },
             { label: 'Pending',   value: counts.pending,   bg: 'bg-amber-50',  text: 'text-amber-700', dot: 'bg-amber-400'  },
             { label: 'Confirmed', value: counts.confirmed, bg: 'bg-[#f0f9e1]', text: 'text-green-700', dot: 'bg-[#9BD22A]'  },
             { label: 'Cancelled', value: counts.cancelled, bg: 'bg-red-50',    text: 'text-red-700',   dot: 'bg-red-400'    },
           ].map(s => (
-            <div key={s.label} className={`${s.bg} rounded-2xl p-4 sm:p-5`}>
+            <div key={s.label} className={`${s.bg} rounded-2xl p-3 sm:p-4 lg:p-5`}>
               <div className="flex items-center gap-1.5 mb-1">
                 <span className={`w-2 h-2 rounded-full flex-shrink-0 ${s.dot}`} />
                 <p className={`text-xs font-semibold ${s.text}`}>{s.label}</p>
               </div>
-              <p className={`text-2xl sm:text-3xl font-bold ${s.text}`}>{s.value}</p>
+              <p className={`text-xl sm:text-2xl lg:text-3xl font-bold ${s.text}`}>{s.value}</p>
             </div>
           ))}
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 flex flex-col sm:flex-row gap-3">
+        <div className="bg-white rounded-2xl border border-gray-100 p-3 sm:p-4 flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search by name, phone, email or concern..."
+              placeholder="Search name, phone, email or concern..."
               className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent"
             />
           </div>
-          <div className="relative flex-shrink-0">
+          <div className="relative w-full sm:w-auto sm:flex-shrink-0">
             <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <select
               value={filterStatus}
               onChange={e => setFilterStatus(e.target.value as typeof filterStatus)}
-              className="pl-8 pr-8 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] appearance-none cursor-pointer"
+              className="w-full sm:w-auto pl-8 pr-8 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] appearance-none cursor-pointer"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -316,7 +321,7 @@ export default function AdminDashboard() {
             <div className="w-10 h-10 border-4 border-[#2B7ABB]/30 border-t-[#2B7ABB] rounded-full animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 p-12 flex flex-col items-center justify-center text-center">
+          <div className="bg-white rounded-2xl border border-gray-100 p-10 sm:p-12 flex flex-col items-center justify-center text-center">
             <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
               <Calendar size={24} className="text-gray-400" />
             </div>
@@ -325,7 +330,7 @@ export default function AdminDashboard() {
           </div>
         ) : (
           <>
-            {/* Desktop Table */}
+            {/* Desktop Table — lg and above */}
             <div className="hidden lg:block bg-white rounded-2xl border border-gray-100 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
@@ -339,7 +344,7 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody className="divide-y divide-gray-50">
                   {filtered.map(a => (
-                    <tr key={a.id} className="hover:bg-gray-50 transition group">
+                    <tr key={a.id} className="hover:bg-gray-50 transition">
                       <td className="px-4 py-4">
                         <p className="font-semibold text-gray-900">{a.full_name}</p>
                         <p className="text-gray-400 text-xs mt-0.5">{new Date(a.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
@@ -367,7 +372,7 @@ export default function AdminDashboard() {
                       <td className="px-4 py-4">
                         <button
                           onClick={() => setSelected(a)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#2B7ABB] text-white text-xs font-semibold rounded-xl hover:bg-[#1e5a8a] transition opacity-0 group-hover:opacity-100"
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#2B7ABB] text-white text-xs font-semibold rounded-xl hover:bg-[#1e5a8a] transition"
                         >
                           <Eye size={12} /> View
                         </button>
@@ -378,30 +383,57 @@ export default function AdminDashboard() {
               </table>
             </div>
 
-            {/* Mobile / Tablet Cards */}
-            <div className="lg:hidden space-y-3">
+            {/* Tablet Cards — sm to lg */}
+            <div className="hidden sm:grid lg:hidden grid-cols-2 gap-3">
               {filtered.map(a => (
                 <div
                   key={a.id}
                   onClick={() => setSelected(a)}
                   className="bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition cursor-pointer"
                 >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div>
-                      <p className="font-bold text-gray-900">{a.full_name}</p>
+                  <div className="flex items-start justify-between gap-2 mb-3">
+                    <div className="min-w-0">
+                      <p className="font-bold text-gray-900 text-sm truncate">{a.full_name}</p>
                       <p className="text-gray-400 text-xs mt-0.5">{new Date(a.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                     </div>
                     <StatusBadge status={a.status} />
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-                    <span className="flex items-center gap-1.5"><Phone size={11} className="text-gray-400" />{a.phone}</span>
-                    {a.email && <span className="flex items-center gap-1.5 truncate"><Mail size={11} className="text-gray-400" />{a.email}</span>}
-                    <span className="flex items-center gap-1.5"><Calendar size={11} className="text-gray-400" />{new Date(a.preferred_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}</span>
-                    {a.preferred_time && <span className="flex items-center gap-1.5"><Clock size={11} className="text-gray-400" />{a.preferred_time}</span>}
+                  <div className="space-y-1.5 text-xs text-gray-600 mb-3">
+                    <span className="flex items-center gap-1.5"><Phone size={11} className="text-gray-400 flex-shrink-0" />{a.phone}</span>
+                    {a.email && <span className="flex items-center gap-1.5 truncate"><Mail size={11} className="text-gray-400 flex-shrink-0" />{a.email}</span>}
+                    <span className="flex items-center gap-1.5"><Calendar size={11} className="text-gray-400 flex-shrink-0" />{new Date(a.preferred_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}{a.preferred_time && ` · ${a.preferred_time}`}</span>
+                  </div>
+                  <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#e6f0fa] text-[#2B7ABB] rounded-full text-xs font-semibold truncate max-w-[120px]">{a.condition}</span>
+                    <span className="text-[#2B7ABB] text-xs font-semibold flex items-center gap-1 flex-shrink-0"><Eye size={11} /> View</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile Cards — below sm */}
+            <div className="sm:hidden space-y-2.5">
+              {filtered.map(a => (
+                <div
+                  key={a.id}
+                  onClick={() => setSelected(a)}
+                  className="bg-white rounded-2xl border border-gray-100 p-4 active:bg-gray-50 transition cursor-pointer"
+                >
+                  <div className="flex items-start justify-between gap-2 mb-2.5">
+                    <div className="min-w-0">
+                      <p className="font-bold text-gray-900 text-sm">{a.full_name}</p>
+                      <p className="text-gray-400 text-xs mt-0.5">{new Date(a.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                    </div>
+                    <StatusBadge status={a.status} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs text-gray-600">
+                    <span className="flex items-center gap-1.5 min-w-0"><Phone size={11} className="text-gray-400 flex-shrink-0" /><span className="truncate">{a.phone}</span></span>
+                    <span className="flex items-center gap-1.5 min-w-0"><Calendar size={11} className="text-gray-400 flex-shrink-0" /><span className="truncate">{new Date(a.preferred_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}</span></span>
+                    {a.email && <span className="flex items-center gap-1.5 min-w-0 col-span-2"><Mail size={11} className="text-gray-400 flex-shrink-0" /><span className="truncate">{a.email}</span></span>}
                   </div>
                   <div className="mt-2.5 pt-2.5 border-t border-gray-100 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#e6f0fa] text-[#2B7ABB] rounded-full text-xs font-semibold">{a.condition}</span>
-                    <span className="text-[#2B7ABB] text-xs font-semibold flex items-center gap-1"><Eye size={11} /> Tap to manage</span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#e6f0fa] text-[#2B7ABB] rounded-full text-xs font-semibold truncate max-w-[140px]">{a.condition}</span>
+                    <span className="text-[#2B7ABB] text-xs font-semibold flex items-center gap-1 flex-shrink-0"><Eye size={11} /> Tap to manage</span>
                   </div>
                 </div>
               ))}
