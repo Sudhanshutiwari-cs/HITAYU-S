@@ -1,12 +1,22 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const FROM_ADDRESS = 'Hitayu Clinic Appointments <onboarding@resend.dev>';
 const TO_ADDRESS = 'hitayusurgicals2026@gmail.com';
 
-const emailHtml = (fullName: string, phone: string, condition: string, preferredDate: string, message: string) => `
+const emailHtml = (
+  fullName: string,
+  phone: string,
+  email: string,
+  address: string,
+  condition: string,
+  preferredDate: string,
+  preferredTime: string,
+  message: string,
+) => `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background: #f9fafb; border-radius: 12px;">
     <div style="background: #2B7ABB; padding: 20px 24px; border-radius: 8px 8px 0 0;">
       <h1 style="color: white; margin: 0; font-size: 22px;">New Appointment Request</h1>
@@ -23,12 +33,24 @@ const emailHtml = (fullName: string, phone: string, condition: string, preferred
           <td style="padding: 12px 0; color: #6b7280;">${phone}</td>
         </tr>
         <tr style="border-bottom: 1px solid #f3f4f6;">
+          <td style="padding: 12px 0; font-weight: bold; color: #374151;">Email Address</td>
+          <td style="padding: 12px 0; color: #6b7280;">${email || 'Not provided'}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f3f4f6;">
+          <td style="padding: 12px 0; font-weight: bold; color: #374151;">Residential Address</td>
+          <td style="padding: 12px 0; color: #6b7280;">${address || 'Not provided'}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f3f4f6;">
           <td style="padding: 12px 0; font-weight: bold; color: #374151;">Health Concern</td>
           <td style="padding: 12px 0; color: #6b7280;">${condition}</td>
         </tr>
         <tr style="border-bottom: 1px solid #f3f4f6;">
           <td style="padding: 12px 0; font-weight: bold; color: #374151;">Preferred Date</td>
           <td style="padding: 12px 0; color: #6b7280;">${preferredDate || 'Not specified'}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f3f4f6;">
+          <td style="padding: 12px 0; font-weight: bold; color: #374151;">Preferred Time</td>
+          <td style="padding: 12px 0; color: #6b7280;">${preferredTime || 'Not specified'}</td>
         </tr>
         <tr>
           <td style="padding: 12px 0; font-weight: bold; color: #374151; vertical-align: top;">Message</td>
@@ -46,25 +68,46 @@ const emailHtml = (fullName: string, phone: string, condition: string, preferred
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { fullName, phone, condition, preferredDate, message } = body;
+    const { fullName, phone, email, address, condition, preferredDate, preferredTime, message } = body;
 
     if (!fullName || !phone || !condition) {
       return NextResponse.json({ error: 'Full name, phone, and health concern are required.' }, { status: 400 });
     }
 
-    const { data, error } = await resend.emails.send({
+    // Save to Supabase
+    const supabase = createAdminClient();
+    const { error: dbError } = await supabase.from('appointments').insert({
+      full_name: fullName,
+      phone,
+      email: email || null,
+      address: address || null,
+      condition,
+      preferred_date: preferredDate || null,
+      preferred_time: preferredTime || null,
+      message: message || null,
+    });
+
+    if (dbError) {
+      console.error('[v0] Supabase insert error:', dbError.message);
+      return NextResponse.json({ error: 'Failed to save appointment. Please try again.' }, { status: 500 });
+    }
+
+    // Send email notification
+    const { error: emailError } = await resend.emails.send({
       from: FROM_ADDRESS,
       to: [TO_ADDRESS],
       subject: `New Appointment Request — ${fullName} (${condition})`,
-      html: emailHtml(fullName, phone, condition, preferredDate, message),
+      html: emailHtml(fullName, phone, email, address, condition, preferredDate, preferredTime, message),
     });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (emailError) {
+      // Appointment is saved; just log the email failure
+      console.error('[v0] Resend error:', emailError.message);
     }
 
-    return NextResponse.json({ success: true, id: data?.id }, { status: 200 });
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
+    console.error('[v0] Appointment route error:', err);
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
   }
 }

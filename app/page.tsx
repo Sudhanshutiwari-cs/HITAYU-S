@@ -65,8 +65,11 @@ function AppointmentForm() {
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
+    email: '',
+    address: '',
     condition: '',
     preferredDate: '',
+    preferredTime: '',
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -92,7 +95,7 @@ function AppointmentForm() {
         setStatus('error');
       } else {
         setStatus('success');
-        setFormData({ fullName: '', phone: '', condition: '', preferredDate: '', message: '' });
+        setFormData({ fullName: '', phone: '', email: '', address: '', condition: '', preferredDate: '', preferredTime: '', message: '' });
       }
     } catch {
       setErrorMessage('Network error. Please check your connection and try again.');
@@ -156,7 +159,21 @@ function AppointmentForm() {
             <input
               type="email"
               name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Enter your email address"
+              className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#9BD22A] focus:border-transparent text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Residential Address</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Street, Area, City"
               className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#9BD22A] focus:border-transparent text-sm"
             />
           </div>
@@ -187,15 +204,36 @@ function AppointmentForm() {
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Date</label>
-            <input
-              type="date"
-              name="preferredDate"
-              value={formData.preferredDate}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent text-gray-500 text-sm"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Date</label>
+              <input
+                type="date"
+                name="preferredDate"
+                value={formData.preferredDate}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent text-gray-500 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Time</label>
+              <select
+                name="preferredTime"
+                value={formData.preferredTime}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2B7ABB] focus:border-transparent text-gray-500 bg-white text-sm"
+              >
+                <option value="">Select time slot</option>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="02:00 PM">02:00 PM</option>
+                <option value="03:00 PM">03:00 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+                <option value="05:00 PM">05:00 PM</option>
+              </select>
+            </div>
           </div>
 
           <div>
