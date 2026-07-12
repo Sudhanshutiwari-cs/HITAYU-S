@@ -2,8 +2,6 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM_ADDRESS = 'Hitayu Clinic Appointments <onboarding@resend.dev>';
 const TO_ADDRESS = 'hitayusurgicals2026@gmail.com';
 
@@ -92,7 +90,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to save appointment. Please try again.' }, { status: 500 });
     }
 
-    // Send email notification
+    // Send email notification — instantiated here to avoid build-time missing key error
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const { error: emailError } = await resend.emails.send({
       from: FROM_ADDRESS,
       to: [TO_ADDRESS],
