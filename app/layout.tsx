@@ -169,21 +169,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* ── Google Analytics ──────────────────────────────────────────────
-            Replace GA_MEASUREMENT_ID below with your G-XXXXXXXXXX ID once
-            you have it from GA4 → Admin → Data Streams.
-        ──────────────────────────────────────────────────────────────────── */}
-        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" /> */}
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'GA_MEASUREMENT_ID', { page_path: window.location.pathname });
-            `,
-          }}
-        /> */}
+
       </head>
       <body className="font-sans antialiased">
         {children}
