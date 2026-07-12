@@ -992,6 +992,38 @@ export default function HitayuSurgicalClinic() {
                 ))}
               </ul>
             </div>
+
+            {/* Card 7: Systemic Illness */}
+            <div className="bg-gradient-to-br from-[#e6f0fa] to-white rounded-2xl p-5 sm:p-6 border border-[#2B7ABB]/20 hover:shadow-lg hover:border-[#2B7ABB]/50 transition group">
+              <div className="w-12 sm:w-14 h-12 sm:h-14 bg-[#2B7ABB] rounded-2xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform">
+                <Pill className="text-white" size={24} />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Systemic Illness</h3>
+              <ul className="space-y-2">
+                {['Hypertension', 'Thyroid Disorders', 'Diabetes'].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
+                    <CheckCircle className="text-[#9BD22A] flex-shrink-0 mt-0.5" size={14} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Card 8: Sexual Wellness */}
+            <div className="bg-gradient-to-br from-[#f0f9e1] to-white rounded-2xl p-5 sm:p-6 border border-[#9BD22A]/20 hover:shadow-lg hover:border-[#9BD22A]/50 transition group">
+              <div className="w-12 sm:w-14 h-12 sm:h-14 bg-[#9BD22A] rounded-2xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform">
+                <Heart className="text-gray-900" size={24} />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Sexual Wellness</h3>
+              <ul className="space-y-2">
+                {['Confidential Consultations', 'Personalised Treatment Plans', 'Holistic Wellness Support'].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
+                    <CheckCircle className="text-[#2B7ABB] flex-shrink-0 mt-0.5" size={14} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Bottom Note */}
