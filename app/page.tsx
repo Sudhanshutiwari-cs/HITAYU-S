@@ -403,7 +403,7 @@ export default function HitayuSurgicalClinic() {
               {/* Tagline */}
               <div className="inline-flex items-center gap-2 bg-[#9BD22A]/10 text-[#2B7ABB] px-3 sm:px-4 py-1.5 rounded-full mb-5 sm:mb-6 border border-[#9BD22A]/20">
                 <div className="w-2 h-2 bg-[#9BD22A] rounded-full flex-shrink-0"></div>
-                <span className="text-xs sm:text-sm font-semibold">NAJAFARGARH&apos;S TRUSTED SURGICAL CLINIC</span>
+                <span className="text-xs sm:text-sm font-semibold">Najafgarh&apos;S TRUSTED SURGICAL CLINIC</span>
               </div>
 
               {/* Main Heading */}
